@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.example.composecraft.presentation.ProductListScreen
+import com.example.composecraft.presentation.components.jun4.CounterWaterIntake
+import com.example.composecraft.presentation.components.jun4.SearchBarWithFilterChips
 import com.example.composecraft.ui.theme.ComposeCraftTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeCraftTheme {
-                ProductListScreen()
+                SearchBarWithFilterChips()
             }
         }
     }
