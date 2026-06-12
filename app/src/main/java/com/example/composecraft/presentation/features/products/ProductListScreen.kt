@@ -1,4 +1,4 @@
-package com.example.composecraft.presentation
+package com.example.composecraft.presentation.features.products
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
