@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import com.example.composecraft.presentation.features.disastercommandcenter.navigation.AppNavigation
-import com.example.composecraft.ui.theme.DisasterTheme
+import com.example.composecraft.presentation.features.fittrack.navigation.FitTrackAppNavigation
+import com.example.composecraft.ui.theme.FitTrackTheme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -14,8 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DisasterTheme {
-                AppNavigation()
+            FitTrackTheme {
+                FitTrackAppNavigation()
             }
         }
     }

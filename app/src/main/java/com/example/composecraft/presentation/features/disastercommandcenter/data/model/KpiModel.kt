@@ -1,41 +1,59 @@
 package com.example.composecraft.presentation.features.disastercommandcenter.data.model
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Commit
+import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.toArgb
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
+object ColorSerializer : KSerializer<Color> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Color", PrimitiveKind.INT)
+    override fun serialize(encoder: Encoder, value: Color) = encoder.encodeInt(value.toArgb())
+    override fun deserialize(decoder: Decoder): Color = Color(decoder.decodeInt())
+}
+
+@Serializable
 enum class IncidentType(
     val title: String,
     val iconSpec: IconSpec,
 ) {
     ALL(
         title = "All",
-        iconSpec = IconSpec(emoji = "", Color(0xFFE57373))
+        iconSpec = IconSpec(emoji = "◎", color = Color(0xFF94A3B8))
     ),
     FIRE(
         title = "Fire",
-        iconSpec = IconSpec(emoji = "\uD83D\uDD25", Color(0xFFE57373))
+        iconSpec = IconSpec(emoji = "🔥", color = Color(0xFFFF5A36))
     ),
     FLOOD(
         title = "Flood",
-        iconSpec = IconSpec(emoji = "⛈\uFE0F", Color(0xFFE57373))
+        iconSpec = IconSpec(emoji = "🌊", color = Color(0xFF3B82F6))
     ),
     MEDICAL(
         title = "Medical",
-        iconSpec = IconSpec(emoji = "✚", Color(0xFFE57373))
+        iconSpec = IconSpec(emoji = "✚", color = Color(0xFFEF4444))
     ),
-
     POWER_OUTAGE(
         title = "Power Outage",
-        iconSpec = IconSpec(emoji = "⚡", Color(0xFFE57373))
+        iconSpec = IconSpec(emoji = "⚡", color = Color(0xFFFACC15))
     ),
     EARTHQUAKE(
         title = "Earthquake",
-        iconSpec = IconSpec(emoji = "♒\uFE0E", Color(0xFFE57373))
-    ),
+        iconSpec = IconSpec(emoji = "⌁", color = Color(0xFFA855F7))
+    )
 }
 
+@Serializable
 data class Incident(
     val type: IncidentType,
     val title: String,
@@ -46,8 +64,10 @@ data class Incident(
     val etaInMin: Int
 )
 
+@Serializable
 data class IconSpec(
     val emoji: String,
+    @Serializable(with = ColorSerializer::class)
     val color: Color
 )
 
@@ -113,6 +133,7 @@ enum class KpiType(
 //    )
 }
 
+@Serializable
 data class Team(
     val name: String,
     val incident: Incident,
@@ -120,8 +141,10 @@ data class Team(
     val users: List<User>
 )
 
+@Serializable
 enum class TeamLiveStatus(
     val title: String,
+    @Serializable(with = ColorSerializer::class)
     val color: Color
 ) {
 
@@ -151,9 +174,11 @@ enum class TeamLiveStatus(
     )
 }
 
+@Serializable
 data class User(
     val id: Int,
     val name: String,
+    val title: String,
     val avatar: String
 )
 
@@ -250,6 +275,7 @@ val mockActiveIncidents = listOf(
     )
 )
 
+@Serializable
 enum class Severity {
     CRITICAL,
     HIGH,
@@ -265,130 +291,69 @@ data class BottomBarCard(
 val bottomBarCards = listOf(
     BottomBarCard(
         title = "Command",
-        icon = Icons.Default.Commit
+        icon = Icons.Default.Dashboard
     ),
     BottomBarCard(
         title = "Chat",
-        icon = Icons.Default.Commit
+        icon = Icons.AutoMirrored.Filled.Chat
     ),
     BottomBarCard(
         title = "Alert",
-        icon = Icons.Default.Commit
+        icon = Icons.Default.Notifications
     ),
     BottomBarCard(
         title = "Log",
-        icon = Icons.Default.Commit
+        icon = Icons.Default.History
     ),
 )
 val mockTeams = listOf(
-
     Team(
         name = "Alpha Team",
         incident = mockActiveIncidents[0],
         status = TeamLiveStatus.EN_ROUTE,
         users = listOf(
-            User(
-                id = 1,
-                name = "Sarah Kim",
-                avatar = "👩🏻‍🚒"
-            ),
-            User(
-                id = 2,
-                name = "David Ross",
-                avatar = "👨🏽‍🚒"
-            ),
-            User(
-                id = 3,
-                name = "Emma Clark",
-                avatar = "👩🏼‍⚕️"
-            )
+            User(1, "Sarah Kim", "Fire Captain", "👩🏻‍🚒"),
+            User(2, "David Ross", "Rescue Specialist", "👨🏽‍🚒"),
+            User(3, "Emma Clark", "Medic", "👩🏼‍⚕️")
         )
     ),
-
     Team(
         name = "Bravo Team",
         incident = mockActiveIncidents[1],
         status = TeamLiveStatus.RESCUING,
         users = listOf(
-            User(
-                id = 4,
-                name = "Noah Patel",
-                avatar = "👨🏾‍🚒"
-            ),
-            User(
-                id = 5,
-                name = "Olivia Chen",
-                avatar = "👩🏻‍💻"
-            ),
-            User(
-                id = 6,
-                name = "Lucas Green",
-                avatar = "👨🏼‍🔧"
-            )
+            User(4, "Noah Patel", "Flood Response Lead", "👨🏾‍🚒"),
+            User(5, "Olivia Chen", "Field Coordinator", "👩🏻‍💻"),
+            User(6, "Lucas Green", "Equipment Engineer", "👨🏼‍🔧")
         )
     ),
-
     Team(
         name = "Charlie Squad",
         incident = mockActiveIncidents[2],
         status = TeamLiveStatus.ON_SITE,
         users = listOf(
-            User(
-                id = 7,
-                name = "Mia Johnson",
-                avatar = "👩🏽‍⚕️"
-            ),
-            User(
-                id = 8,
-                name = "Ethan Walker",
-                avatar = "👨🏻‍⚕️"
-            )
+            User(7, "Mia Johnson", "Paramedic", "👩🏽‍⚕️"),
+            User(8, "Ethan Walker", "Emergency Doctor", "👨🏻‍⚕️")
         )
     ),
-
     Team(
         name = "Delta Team",
         incident = mockActiveIncidents[3],
         status = TeamLiveStatus.STANDBY,
         users = listOf(
-            User(
-                id = 9,
-                name = "Sophia Lee",
-                avatar = "👩🏼‍🔧"
-            ),
-            User(
-                id = 10,
-                name = "James Carter",
-                avatar = "👨🏽‍🔧"
-            ),
-            User(
-                id = 11,
-                name = "Ava Wilson",
-                avatar = "👩🏻‍💻"
-            )
+            User(9, "Sophia Lee", "Power Technician", "👩🏼‍🔧"),
+            User(10, "James Carter", "Grid Engineer", "👨🏽‍🔧"),
+            User(11, "Ava Wilson", "Ops Analyst", "👩🏻‍💻")
         )
     ),
-
     Team(
         name = "Urban Division",
         incident = mockActiveIncidents[4],
         status = TeamLiveStatus.EVACUATING,
         users = listOf(
-            User(
-                id = 12,
-                name = "Liam Brown",
-                avatar = "👨🏿‍🚒"
-            ),
-            User(
-                id = 13,
-                name = "Charlotte Adams",
-                avatar = "👩🏼‍🚒"
-            ),
-            User(
-                id = 14,
-                name = "Benjamin Scott",
-                avatar = "👨🏻‍🔧"
-            )
+            User(12, "Liam Brown", "Search Lead", "👨🏿‍🚒"),
+            User(13, "Charlotte Adams", "Evacuation Officer", "👩🏼‍🚒"),
+            User(14, "Benjamin Scott", "Structural Engineer", "👨🏻‍🔧")
         )
     )
 )

@@ -1,10 +1,14 @@
 package com.example.composecraft.presentation.features.disastercommandcenter.presentation.composables
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -16,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.composecraft.presentation.features.disastercommandcenter.data.model.KpiModel
 import com.example.composecraft.presentation.features.disastercommandcenter.data.model.KpiType
 import com.example.composecraft.ui.theme.DisasterTheme
@@ -43,45 +46,65 @@ fun OverviewKPICard(
     modifier: Modifier = Modifier
 ) {
     Card(
+        modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ),
+        shape = MaterialTheme.shapes.large,
         border = BorderStroke(
             1.dp,
-            MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
+            model.type.iconSpec.color.copy(alpha = 0.1f)
         ),
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            IncidentIcon(model.type.iconSpec)
-            Text(
-                text = model.value,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = model.title,
-                fontSize = 12.sp,
-                color = Color.Gray
-            )
+            Box(
+                modifier = Modifier
+                    .background(
+                        model.type.iconSpec.color.copy(alpha = 0.1f),
+                        MaterialTheme.shapes.medium
+                    )
+                    .padding(6.dp)
+            ) {
+                IncidentIcon(model.type.iconSpec)
+            }
+            
+            Column {
+                Text(
+                    text = model.value,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = model.title,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier
+                    .background(
+                        if (model.trend.startsWith("+")) Color(0xFF22C55E).copy(alpha = 0.1f)
+                        else Color(0xFFEF4444).copy(alpha = 0.1f),
+                        CircleShape
+                    )
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
             ) {
                 Text(
                     text = model.trend,
-                    color = model.type.iconSpec.color,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Text(
-                    text = model.trendSuffix,
-                    fontSize = 12.sp,
-                    color = Color.Gray
+                    color = if (model.trend.startsWith("+")) Color(0xFF22C55E) else Color(0xFFEF4444),
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }

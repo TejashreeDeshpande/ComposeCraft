@@ -83,10 +83,12 @@ fun FilterResultsScreen(modifier: Modifier = Modifier) {
                         )
                     )
                 ),
-                colors = TopAppBarDefaults.largeTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent,
+                    scrolledContainerColor = Color(0xFF0F172A).copy(alpha = 0.95f),
+                    navigationIconContentColor = Color.Unspecified,
                     titleContentColor = Color.White,
-                    scrolledContainerColor = Color(0xFF0F172A).copy(alpha = 0.95f)
+                    actionIconContentColor = Color.Unspecified
                 ),
                 scrollBehavior = scrollBehavior
             )

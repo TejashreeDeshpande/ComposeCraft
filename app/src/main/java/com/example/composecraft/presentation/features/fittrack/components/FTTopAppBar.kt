@@ -1,21 +1,25 @@
 package com.example.composecraft.presentation.features.fittrack.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,26 +27,25 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(
+fun FTTopAppBar(
     title: String,
     subTitle: String,
     backgroundColor: Color,
     textColor: Color,
     modifier: Modifier = Modifier,
-    navButtonIcon: String? = null, // emoji
     actionButtonIcon: String? = null, // emoji
     actionButtonIconSize: Dp = 44.dp,
     onClickActionButton: () -> Unit = {},
-    onClickBackButton: () -> Unit = {},
+    onClickBackButton: (() -> Unit)? = null,
 ) {
     TopAppBar(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier,
+        windowInsets = WindowInsets(0.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = backgroundColor
         ),
         title = {
-            Column(modifier = modifier.padding(8.dp)) {
+            Column(modifier = Modifier.padding(8.dp)) {
                 Text(
                     text = title,
                     color = textColor,
@@ -56,21 +59,49 @@ fun AppTopBar(
                 )
             }
         },
-        navigationIcon = { },
+        navigationIcon = {
+            onClickBackButton?.let {
+                IconButton(
+                    onClick = onClickBackButton,
+                    shape = CircleShape,
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = backgroundColor.copy(alpha = 0.6f)
+                    ),
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = textColor,
+                    )
+                }
+            }
+        },
         actions = {
             if (actionButtonIcon != null) {
                 IconButton(
-                    onClick = { onClickActionButton() },
+                    onClick = onClickActionButton,
                     modifier = Modifier
                         .size(actionButtonIconSize)
                         .align(Alignment.CenterVertically)
                 ) {
                     Text(
                         text = actionButtonIcon,
-                        fontSize = 10.sp,
+                        fontSize = 24.sp,
                     )
                 }
             }
         },
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FTTopAppBarPreview() {
+    FTTopAppBar(
+        title = "FitTrack",
+        subTitle = "Your fitness journey",
+        backgroundColor = Color(0xFF9F5F91),
+        textColor = Color.White,
+        actionButtonIcon = "🔥"
     )
 }

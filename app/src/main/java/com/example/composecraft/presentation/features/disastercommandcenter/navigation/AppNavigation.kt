@@ -15,12 +15,14 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.example.composecraft.presentation.features.disastercommandcenter.data.model.Team
+import com.example.composecraft.presentation.features.disastercommandcenter.data.model.bottomBarCards
+import com.example.composecraft.presentation.features.disastercommandcenter.presentation.composables.AppBottomBar
 import com.example.composecraft.presentation.features.disastercommandcenter.presentation.screens.AlertsScreen
 import com.example.composecraft.presentation.features.disastercommandcenter.presentation.screens.ChatScreen
 import com.example.composecraft.presentation.features.disastercommandcenter.presentation.screens.DisasterDashboard
 import com.example.composecraft.presentation.features.disastercommandcenter.presentation.screens.LogScreen
-import com.example.composecraft.presentation.features.disastercommandcenter.presentation.composables.AppBottomBar
-import com.example.composecraft.presentation.features.disastercommandcenter.data.model.bottomBarCards
+import com.example.composecraft.presentation.features.disastercommandcenter.presentation.screens.TeamDetails
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -61,7 +63,11 @@ fun AppNavigation() {
             backStack = backStack,
             entryProvider = entryProvider {
                 entry<DisasterDashboardDestination> {
-                    DisasterDashboard()
+                    DisasterDashboard(
+                        onTeamSelected = { team ->
+                            backStack.add(TeamDetailsDestination(team))
+                        }
+                    )
                 }
                 entry<ChatDestination> {
                     ChatScreen()
@@ -71,6 +77,9 @@ fun AppNavigation() {
                 }
                 entry<LogDestination> {
                     LogScreen()
+                }
+                entry<TeamDetailsDestination> { destination ->
+                    TeamDetails(team = destination.team)
                 }
             },
             transitionSpec = {
@@ -103,3 +112,6 @@ data object LogDestination : NavKey
 
 @Serializable
 data object MoreDestination : NavKey
+
+@Serializable
+data class TeamDetailsDestination(val team: Team) : NavKey

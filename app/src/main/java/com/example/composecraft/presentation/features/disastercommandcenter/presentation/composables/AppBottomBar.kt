@@ -6,17 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.disastercommandcenter.data.model.BottomBarCard
@@ -41,11 +41,13 @@ fun AppBottomBar(
 ) {
     BottomAppBar(
         modifier = modifier.fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 8.dp,
         actions = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -67,29 +69,31 @@ private fun BottomNavCard(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    Card(
+    Surface(
         modifier = Modifier
             .clickable { onClick() },
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.surface else Color.Transparent
-        ),
-        shape = RoundedCornerShape(12.dp)
+        color = if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f) else Color.Transparent,
+        shape = MaterialTheme.shapes.medium
     ) {
         Column(
             modifier = Modifier.padding(
-                horizontal = if (isSelected) 24.dp else 16.dp,
-                vertical = 16.dp
+                horizontal = if (isSelected) 20.dp else 12.dp,
+                vertical = 12.dp
             ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
                 imageVector = bottomCard.icon,
-                contentDescription = bottomCard.title
+                contentDescription = bottomCard.title,
+                tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp)
             )
             Text(
                 text = bottomCard.title,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
+                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
             )
         }
     }
