@@ -18,6 +18,7 @@ import com.example.composecraft.presentation.features.fittrack.components.FTText
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @Preview
@@ -35,7 +36,7 @@ fun AddExerciseBasicInfo() {
             FTTopAppBar(
                 title = "New Exercise",
                 subTitle = "Step 1 of 2 - Basic Info",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.ExerciseLibrary,
             )
         },
     ) { paddingValues ->

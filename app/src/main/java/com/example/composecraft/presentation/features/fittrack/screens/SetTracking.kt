@@ -33,6 +33,7 @@ import com.example.composecraft.presentation.features.fittrack.components.FTCard
 import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 
 @Preview
 @Composable
@@ -48,7 +49,7 @@ fun SetTracking(onClickBackButton: () -> Unit) {
             FTTopAppBar(
                 title = "Bench Press",
                 subTitle = "Set 2 of 4",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.WorkoutBuilder,
             )
         }) { innerPadding ->
         SetTrackingContent(modifier = Modifier.padding(innerPadding))

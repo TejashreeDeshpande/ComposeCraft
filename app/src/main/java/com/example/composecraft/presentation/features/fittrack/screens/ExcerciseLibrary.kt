@@ -25,6 +25,7 @@ import com.example.composecraft.presentation.features.fittrack.components.FTSing
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @Preview
@@ -42,7 +43,7 @@ fun ExerciseLibrary() {
             FTTopAppBar(
                 title = "Exercises",
                 subTitle = "Your exercise library",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.ExerciseLibrary,
             )
         }
     ) { innerPadding ->

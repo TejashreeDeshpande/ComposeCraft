@@ -21,6 +21,7 @@ import com.example.composecraft.presentation.features.fittrack.components.FTList
 import com.example.composecraft.presentation.features.fittrack.components.FTTextField
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @Preview
@@ -38,7 +39,7 @@ fun CreateWorkout() {
             FTTopAppBar(
                 title = "Create Workout",
                 subTitle = "Design your routine",
-                colors = FTTopAppBarColors.primary(),
+                gradient= FitTrackGradients.WorkoutBuilder,
             )
         },
     ) { paddingValues ->

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 
 @Preview
 @Composable
@@ -24,7 +25,7 @@ fun BlockEditor() {
             FTTopAppBar(
                 title = "Edit Block",
                 subTitle = "Block 2 - Main Work",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.WorkoutBuilder,
             )
         },
     ) { paddingValues ->

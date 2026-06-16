@@ -101,11 +101,7 @@ fun FitTrackAppNavigation() {
                         )
                     }
                     entry<SetCompletionDestination> {
-                        SetCompletion(
-                            onClickBackButton = {
-                                backStack.remove(SetCompletionDestination)
-                            },
-                        )
+                        SetCompletion()
                     }
                     entry<ShareWorkoutDestination> {
                         ShareWorkout()

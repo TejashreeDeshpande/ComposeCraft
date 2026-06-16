@@ -15,9 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
 import com.example.composecraft.presentation.features.fittrack.components.FTListRow
+import com.example.composecraft.presentation.features.fittrack.components.FTTextColor
+import com.example.composecraft.presentation.features.fittrack.components.FTTextStyle
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 
@@ -36,7 +39,7 @@ fun ShareWorkout() {
             FTTopAppBar(
                 title = "Share Workout",
                 subTitle = "Send or receive plans",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.Profile,
             )
         }
     ) { innerPadding ->
@@ -80,7 +83,11 @@ private fun WorkoutCard() {
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            FTTitle("Push Day Workout")
+            FTTitle(
+                "Push Day Workout",
+                style = FTTextStyle.rowTitle,
+                color = FTTextColor.rowTitle
+            )
             Text("3 exercises - 12 sets - ~45 min")
         }
     }

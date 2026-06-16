@@ -24,6 +24,7 @@ import com.example.composecraft.presentation.features.fittrack.components.FTCard
 import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 import com.example.composecraft.ui.theme.FontSize
 
@@ -31,18 +32,18 @@ import com.example.composecraft.ui.theme.FontSize
 @Composable
 fun PreviewSetCompletion() {
     FitTrackTheme {
-        SetCompletion(onClickBackButton = {})
+        SetCompletion()
     }
 }
 
 @Composable
-fun SetCompletion(onClickBackButton: () -> Unit) {
+fun SetCompletion() {
     Scaffold(
         topBar = {
             FTTopAppBar(
                 title = "Complete Sets",
                 subTitle = "Mark individual sets",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.WorkoutBuilder,
             )
         }
     ) { innerPadding ->

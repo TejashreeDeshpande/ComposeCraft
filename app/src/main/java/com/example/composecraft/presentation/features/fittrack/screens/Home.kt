@@ -39,10 +39,10 @@ import com.example.composecraft.presentation.features.fittrack.components.FTCard
 import com.example.composecraft.presentation.features.fittrack.components.FTCircleIcon
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.presentation.features.fittrack.navigation.LocalNavigationRailToggle
 import com.example.composecraft.presentation.features.fittrack.navigation.SetTrackingDestination
 import com.example.composecraft.presentation.features.fittrack.utils.AppUtils
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -67,7 +67,7 @@ fun Home(
             FTTopAppBar(
                 title = "FitTrack",
                 subTitle = todayDate,
-                colors = FTTopAppBarColors.primary(),
+                gradient= FitTrackGradients.Dashboard,
                 onClickNavigationRail = onClickMenu
             )
         }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.disastercommandcenter.data.model.FocusArea
@@ -22,7 +21,7 @@ import com.example.composecraft.presentation.features.fittrack.components.FTText
 import com.example.composecraft.presentation.features.fittrack.components.FTTextStyle
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @Preview
@@ -40,7 +39,7 @@ fun AddExerciseDetails() {
             FTTopAppBar(
                 title = "New Exercise",
                 subTitle = "Step 1 of 2 - Basic Info",
-                colors = FTTopAppBarColors.primary(),
+                gradient = FitTrackGradients.ExerciseLibrary,
             )
         },
     ) { paddingValues ->
