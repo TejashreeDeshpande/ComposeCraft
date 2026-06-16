@@ -1,9 +1,7 @@
 package com.example.composecraft.presentation.features.fittrack.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,17 +10,17 @@ import com.example.composecraft.presentation.features.fittrack.components.FTTopA
 
 @Preview
 @Composable
-fun PreviewExerciseDetails() {
-    ExerciseDetails()
+fun PreviewExerciseSetsEditor() {
+    ExerciseSetsEditor()
 }
 
 @Composable
-fun ExerciseDetails() {
+fun ExerciseSetsEditor() {
     Scaffold(
         topBar = {
             FTTopAppBar(
-                title = "Exercise Details",
-                subTitle = "",
+                title = "Bench Press",
+                subTitle = "Planned sets - Block 2",
                 colors = FTTopAppBarColors.primary(),
             )
         },
@@ -30,12 +28,5 @@ fun ExerciseDetails() {
         ExerciseDetailsContent(
             modifier = Modifier.padding(paddingValues)
         )
-    }
-}
-
-@Composable
-fun ExerciseDetailsContent(modifier: Modifier) {
-    Column(modifier = modifier) {
-        Text("Exercise Details")
     }
 }

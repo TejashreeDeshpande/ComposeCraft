@@ -12,30 +12,30 @@ import com.example.composecraft.presentation.features.fittrack.components.FTTopA
 
 @Preview
 @Composable
-fun PreviewExerciseDetails() {
-    ExerciseDetails()
+fun PreviewPlanOverview() {
+    PlanOverview()
 }
 
 @Composable
-fun ExerciseDetails() {
+fun PlanOverview() {
     Scaffold(
         topBar = {
             FTTopAppBar(
-                title = "Exercise Details",
-                subTitle = "",
+                title = "Push Day A",
+                subTitle = "Workout plan - 3 blocks",
                 colors = FTTopAppBarColors.primary(),
             )
         },
     ) { paddingValues ->
-        ExerciseDetailsContent(
+        PlanOverviewContent(
             modifier = Modifier.padding(paddingValues)
         )
     }
 }
 
 @Composable
-fun ExerciseDetailsContent(modifier: Modifier) {
+fun PlanOverviewContent(modifier: Modifier) {
     Column(modifier = modifier) {
-        Text("Exercise Details")
+        Text("Plan Overview")
     }
 }

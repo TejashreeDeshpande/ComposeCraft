@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
-import com.example.composecraft.presentation.features.fittrack.components.FTListHeader
 import com.example.composecraft.presentation.features.fittrack.components.FTListRow
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 
@@ -31,18 +31,12 @@ fun PreviewShareWorkout() {
 
 @Composable
 fun ShareWorkout() {
-
     Scaffold(
         topBar = {
             FTTopAppBar(
                 title = "Share Workout",
                 subTitle = "Send or receive plans",
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier,
-                actionButtonIcon = " ↗\uFE0F ",
-                onClickActionButton = {},
-                onClickBackButton = {}
+                colors = FTTopAppBarColors.primary(),
             )
         }
     ) { innerPadding ->
@@ -86,7 +80,7 @@ private fun WorkoutCard() {
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            FTListHeader("Push Day Workout")
+            FTTitle("Push Day Workout")
             Text("3 exercises - 12 sets - ~45 min")
         }
     }

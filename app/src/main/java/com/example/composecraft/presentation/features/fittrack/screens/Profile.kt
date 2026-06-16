@@ -19,8 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTCard
-import com.example.composecraft.presentation.features.fittrack.components.FTListHeader
+import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
+import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackTheme
 import com.example.composecraft.ui.theme.FontSize
 
@@ -39,12 +41,7 @@ fun Profile() {
             FTTopAppBar(
                 title = "Alex",
                 subTitle = "Fitness Enthusiast",
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier,
-                actionButtonIcon = " ⚙\uFE0F ",
-                onClickActionButton = {},
-                onClickBackButton = null
+                colors = FTTopAppBarColors.primary(),
             )
         }
 
@@ -65,14 +62,14 @@ fun ProfileContent(modifier: Modifier = Modifier) {
 
 @Composable
 fun SettingsCard() {
-    FTCard {
+    FTCard(colors = FTCardColors.disabled()) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
                 .padding(top = 16.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            FTListHeader("Settings")
+            FTTitle("Settings")
             SettingsRow(label = "Share via NFC")
             HorizontalDivider()
             SettingsRow("Bluetooth Sync")
@@ -89,12 +86,12 @@ private fun SettingsRow(label: String) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(
             label,
-            fontSize = FontSize.HEADER.value,
+            fontSize = FontSize.BODY.value,
             modifier = Modifier.weight(1f)
         )
         Text(
             ">",
-            fontSize = FontSize.HEADER.value,
+            fontSize = FontSize.BODY.value,
         )
     }
 }
@@ -108,23 +105,20 @@ private fun WorkoutStatusRow() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         FTCard(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+            colors = FTCardColors.disabled()
         ) {
             DataColumn(value = 12, label = "Workout")
         }
         FTCard(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+            colors = FTCardColors.disabled()
         ) {
             DataColumn(value = 5, label = "Week Streak")
         }
         FTCard(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
+            modifier = Modifier.weight(1f).fillMaxHeight(),
+            colors = FTCardColors.disabled()
         ) {
             DataColumn(value = 23, label = "Exercises")
         }

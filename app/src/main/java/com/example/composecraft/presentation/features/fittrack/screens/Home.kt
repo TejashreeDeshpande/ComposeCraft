@@ -1,9 +1,9 @@
 package com.example.composecraft.presentation.features.fittrack.screens
 
-
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -28,31 +28,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation3.runtime.NavKey
 import com.example.composecraft.data.fittrack.MockWorkouts
 import com.example.composecraft.data.fittrack.Workout
 import com.example.composecraft.data.fittrack.WorkoutStatus
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
-import com.example.composecraft.presentation.features.fittrack.components.ButtonType
-import com.example.composecraft.presentation.features.fittrack.components.FTCircleIcon
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
+import com.example.composecraft.presentation.features.fittrack.components.FTAppButtonColors
 import com.example.composecraft.presentation.features.fittrack.components.FTCard
-import com.example.composecraft.presentation.features.fittrack.components.FTListHeader
+import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
+import com.example.composecraft.presentation.features.fittrack.components.FTCircleIcon
+import com.example.composecraft.presentation.features.fittrack.components.FTTitle
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.presentation.features.fittrack.navigation.LocalNavigationRailToggle
+import com.example.composecraft.presentation.features.fittrack.navigation.SetTrackingDestination
 import com.example.composecraft.presentation.features.fittrack.utils.AppUtils
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-fun PreviewFitTrackHome() {
+fun PreviewHome() {
     FitTrackTheme {
-        FitTrackHome(onClickCreateWorkout = {})
+        Home(navigateTo = {})
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FitTrackHome(onClickCreateWorkout: () -> Unit) {
+fun Home(
+    navigateTo: (NavKey) -> Unit,
+    onClickMenu: () -> Unit = LocalNavigationRailToggle.current,
+) {
     val todayDate = remember { AppUtils.getFormattedTodayDate() }
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -60,30 +67,28 @@ fun FitTrackHome(onClickCreateWorkout: () -> Unit) {
             FTTopAppBar(
                 title = "FitTrack",
                 subTitle = todayDate,
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier,
-                actionButtonIcon = " 👤 ",
-                onClickActionButton = {},
-                onClickBackButton = null
+                colors = FTTopAppBarColors.primary(),
+                onClickNavigationRail = onClickMenu
             )
         }
     ) { paddingValues ->
-        FitTrackHomeContents(
-            workouts = MockWorkouts.list,
-            onClickCreateWorkout = onClickCreateWorkout,
+        HomeContent(
+            navigateTo = navigateTo,
             modifier = Modifier.padding(paddingValues)
         )
     }
+
 }
 
-@OptIn(ExperimentalFoundationApi::class) // Required for stickyHeader
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FitTrackHomeContents(
-    workouts: List<Workout>,
-    onClickCreateWorkout: () -> Unit,
+fun HomeContent(
+    navigateTo: (NavKey) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val workouts = MockWorkouts.list
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -92,17 +97,18 @@ fun FitTrackHomeContents(
     ) {
         FTAppButton(
             text = "+ New Workout",
-            onClick = onClickCreateWorkout,
-            type = ButtonType.Primary,
-            modifier = Modifier.fillMaxWidth()
+            onClick = {},
+            modifier = Modifier.fillMaxWidth(),
+            colors = FTAppButtonColors.primary()
         )
 
-        WorkoutList(workouts)
+        WorkoutList(workouts, navigateTo)
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ColumnScope.WorkoutList(workouts: List<Workout>) {
+private fun ColumnScope.WorkoutList(workouts: List<Workout>, navigateTo: (NavKey) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -110,15 +116,17 @@ private fun ColumnScope.WorkoutList(workouts: List<Workout>) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         stickyHeader {
-            FTListHeader("Recent Workouts")
+            FTTitle("Recent Workouts")
         }
         items(workouts) { workout ->
             WorkoutListItem(
                 title = workout.name,
                 subTitle = workout.details,
                 status = workout.status,
-                modifier = Modifier.fillMaxWidth(),
-                onClickIcon = { }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { navigateTo(SetTrackingDestination) },
+                onClickIcon = { navigateTo(SetTrackingDestination) }
             )
         }
     }
@@ -144,10 +152,10 @@ fun WorkoutListItem(
     modifier: Modifier = Modifier,
     onClickIcon: () -> Unit
 ) {
-    FTCard {
+    FTCard(colors = FTCardColors.disabled()) {
         Column(
             modifier = modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -158,7 +166,7 @@ fun WorkoutListItem(
                     iconSize = 24.dp,
                     containerColor = status.backgroundColor,
                     contentColor = status.iconTint,
-                    onClickActionButton = {}
+                    onClickActionButton = onClickIcon
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -180,4 +188,3 @@ fun WorkoutListItem(
         }
     }
 }
-

@@ -1,13 +1,16 @@
 package com.example.composecraft.presentation.features.fittrack.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -23,11 +26,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
-import com.example.composecraft.presentation.features.fittrack.components.ButtonType
+import com.example.composecraft.presentation.features.fittrack.components.FTAppButtonColors
 import com.example.composecraft.presentation.features.fittrack.components.FTCircleIcon
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTCard
-import com.example.composecraft.presentation.features.fittrack.components.FTListHeader
+import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
+import com.example.composecraft.presentation.features.fittrack.components.FTTitle
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 
 @Preview
 @Composable
@@ -43,12 +48,7 @@ fun SetTracking(onClickBackButton: () -> Unit) {
             FTTopAppBar(
                 title = "Bench Press",
                 subTitle = "Set 2 of 4",
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier,
-                actionButtonIcon = " 👤 ",
-                onClickActionButton = {},
-                onClickBackButton = onClickBackButton
+                colors = FTTopAppBarColors.primary(),
             )
         }) { innerPadding ->
         SetTrackingContent(modifier = Modifier.padding(innerPadding))
@@ -71,12 +71,12 @@ fun SetTrackingContent(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SetTrackingMetricSetUp(modifier: Modifier = Modifier) {
-    FTCard {
+    FTCard(colors = FTCardColors.disabled()) {
         Column(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            FTListHeader("Bench Press")
+            FTTitle("Bench Press")
 
             SetTrackingRow(setNumber = "1")
             HorizontalDivider()
@@ -182,21 +182,22 @@ private fun ActionButtons() {
                 modifier = Modifier.weight(1f),
                 text = "Mark Sets",
                 onClick = {},
-                type = ButtonType.Tertiary
+                colors = FTAppButtonColors.tertiary()
             )
 
             FTAppButton(
                 modifier = Modifier.weight(1f),
                 text = "Complete All",
                 onClick = {},
-                type = ButtonType.Secondary
+                colors = FTAppButtonColors.secondary()
             )
 
         }
         FTAppButton(
             text = "New Exercise",
             onClick = {},
-            type = ButtonType.Primary
+            colors = FTAppButtonColors.primary(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

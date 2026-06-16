@@ -5,23 +5,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
-@Composable
-fun FTListHeader(title: String) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.headlineMedium,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.fillMaxWidth()
-    )
-}
 
 @Composable
-fun FTTitle(title: String) {
+fun FTTitle(
+    title: String,
+    style: TextStyle = FTTextStyle.listTitle,
+    color: Color = FTTextColor.listTitle
+) {
     Text(
         text = title,
-        style = MaterialTheme.typography.headlineLarge,
+        color = color,
+        style = style,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.fillMaxWidth()
     )

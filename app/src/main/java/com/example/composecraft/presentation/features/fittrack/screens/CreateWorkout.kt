@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,44 +16,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
-import com.example.composecraft.presentation.features.fittrack.components.ButtonType
+import com.example.composecraft.presentation.features.fittrack.components.FTAppButtonColors
 import com.example.composecraft.presentation.features.fittrack.components.FTListRow
+import com.example.composecraft.presentation.features.fittrack.components.FTTextField
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackTheme
 
 @Preview
 @Composable
 fun PreviewCreateWorkout() {
     FitTrackTheme {
-        CreateWorkout(
-            onClickBackButton = {},
-            onClickSaveWorkout = {},
-            onClickAddExercise = {})
+        CreateWorkout()
     }
 }
 
 @Composable
-fun CreateWorkout(
-    onClickBackButton: () -> Unit, onClickSaveWorkout: () -> Unit, onClickAddExercise: () -> Unit
-) {
+fun CreateWorkout() {
     Scaffold(
         topBar = {
             FTTopAppBar(
                 title = "Create Workout",
                 subTitle = "Design your routine",
-                backgroundColor = MaterialTheme.colorScheme.secondary,
-                textColor = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier,
-                actionButtonIcon = "💻",
-                actionButtonIconSize = 44.dp,
-                onClickActionButton = { },
-                onClickBackButton = onClickBackButton
+                colors = FTTopAppBarColors.primary(),
             )
         },
     ) { paddingValues ->
         CreateWorkoutContent(
-            onClickSaveWorkout = onClickSaveWorkout,
-            onClickAddExercise = onClickAddExercise,
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -62,7 +50,7 @@ fun CreateWorkout(
 
 @Composable
 fun CreateWorkoutContent(
-    onClickSaveWorkout: () -> Unit, onClickAddExercise: () -> Unit, modifier: Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -70,9 +58,15 @@ fun CreateWorkoutContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        EnterWorkoutName()
+        FTTextField(
+            title = "Workout Name",
+            value = "Push Day",
+            onValueChanged = {}
+        )
         ExerciseSuggestionList()
-        ActionButtons(onClickAddExercise, onClickSaveWorkout)
+        ActionButtons(
+            onClickAddExercise = {},
+            onClickSaveWorkout = {})
     }
 
 }
@@ -86,13 +80,13 @@ private fun ActionButtons(
         modifier = Modifier.fillMaxWidth(),
         text = "+ Add Exercise",
         onClick = onClickAddExercise,
-        type = ButtonType.Secondary
+        colors = FTAppButtonColors.secondary()
     )
     FTAppButton(
         modifier = Modifier.fillMaxWidth(),
         text = "Save Workout",
         onClick = onClickSaveWorkout,
-        type = ButtonType.Primary
+        colors = FTAppButtonColors.primary()
     )
 }
 
@@ -111,24 +105,12 @@ private fun ExerciseSuggestionList() {
         }
         items(mockExercises) { exercise ->
             FTListRow(
-                label = exercise.name.label,
+                label = exercise.name.title,
                 desc = exercise.desc,
                 trailingIconStr = "x"
             )
         }
     }
-}
-
-@Composable
-private fun EnterWorkoutName() {
-    Text(
-        text = "Workout Name",
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold
-    )
-    OutlinedTextField(
-        value = "", onValueChange = {}, modifier = Modifier.fillMaxWidth()
-    )
 }
 
 val mockExercises = listOf(
@@ -141,6 +123,10 @@ val mockExercises = listOf(
 
 data class Exercise(val name: ExerciseType, val desc: String)
 
-enum class ExerciseType(val label: String) {
+enum class ExerciseType(val title: String) {
+    BENCH_PRESS("Bench Press"), PUSH_UPS("Push-ups")
+}
+
+enum class Equipment(val title: String) {
     BENCH_PRESS("Bench Press"), PUSH_UPS("Push-ups")
 }

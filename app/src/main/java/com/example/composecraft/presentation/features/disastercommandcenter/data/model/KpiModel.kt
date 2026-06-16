@@ -17,7 +17,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 object ColorSerializer : KSerializer<Color> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Color", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("Color", PrimitiveKind.INT)
+
     override fun serialize(encoder: Encoder, value: Color) = encoder.encodeInt(value.toArgb())
     override fun deserialize(decoder: Decoder): Color = Color(decoder.decodeInt())
 }
@@ -357,3 +359,47 @@ val mockTeams = listOf(
         )
     )
 )
+
+enum class ExerciseType(val title: String) {
+    COMPOUND("Compound"),
+    ISOLATION("Isolation")
+}
+
+enum class Equipment(val title: String) {
+    BODYWEIGHT("Bodyweight"),
+    BARBELL("Barbell"),
+    DUMBBELL("Dumbbell"),
+    KETTLEBELL("Kettlebell"),
+    CABLE("Cable"),
+    MACHINE("Machine"),
+    RESISTANCE_BAND("Resistance Band"),
+}
+
+enum class PrimaryMuscleGroups(val title: String) {
+    HAMSTRINGS("Hamstrings"),
+    GLUTES("Glutes"),
+    QUADS("Quads"),
+    CALVES("Calves"),
+    LOWER_BACK("Lower Back"),
+    CHEST("Chest"),
+    BACK("Back"),
+    SHOULDERS("Shoulders"),
+    BICEPS("Biceps"),
+    TRICEPS("Triceps"),
+    CORE("Core")
+}
+
+enum class FocusArea(val title: String) {
+    ALL("All"),
+    CHEST("Chest"),
+    BACK("Back"),
+    LEGS("Legs"),
+    ARMS("Arms")
+}
+
+enum class DifficultyLevel(val title: String) {
+    BEGINNER("Beginner"),
+    INTERMEDIATE("Intermediate"),
+    ADVANCED("Advanced"),
+    ELITE("Elite")
+}

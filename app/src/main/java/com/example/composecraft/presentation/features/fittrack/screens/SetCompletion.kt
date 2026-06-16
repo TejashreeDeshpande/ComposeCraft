@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
-import com.example.composecraft.presentation.features.fittrack.components.ButtonType
+import com.example.composecraft.presentation.features.fittrack.components.FTAppButtonColors
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
 import com.example.composecraft.presentation.features.fittrack.components.FTCard
-import com.example.composecraft.presentation.features.fittrack.components.FTListHeader
+import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
+import com.example.composecraft.presentation.features.fittrack.components.FTTitle
+import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackTheme
 import com.example.composecraft.ui.theme.FontSize
 
@@ -29,23 +31,18 @@ import com.example.composecraft.ui.theme.FontSize
 @Composable
 fun PreviewSetCompletion() {
     FitTrackTheme {
-        SetCompletion()
+        SetCompletion(onClickBackButton = {})
     }
 }
 
 @Composable
-fun SetCompletion() {
+fun SetCompletion(onClickBackButton: () -> Unit) {
     Scaffold(
         topBar = {
             FTTopAppBar(
                 title = "Complete Sets",
                 subTitle = "Mark individual sets",
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier,
-                actionButtonIcon = "",
-                onClickActionButton = {},
-                onClickBackButton = {}
+                colors = FTTopAppBarColors.primary(),
             )
         }
     ) { innerPadding ->
@@ -69,7 +66,7 @@ fun SetCompletionContent(modifier: Modifier = Modifier) {
 fun QuickActions(
     modifier: Modifier = Modifier
 ) {
-    FTCard {
+    FTCard(colors = FTCardColors.disabled()) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
@@ -77,7 +74,7 @@ fun QuickActions(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            FTListHeader(title = "Quick Actions")
+            FTTitle(title = "Quick Actions")
 
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -87,17 +84,17 @@ fun QuickActions(
                 FTAppButton(
                     text = "Rest Timer",
                     onClick = {},
-                    type = ButtonType.Tertiary
+                    colors = FTAppButtonColors.tertiary()
                 )
                 FTAppButton(
                     text = "Notes",
                     onClick = {},
-                    type = ButtonType.Tertiary
+                    colors = FTAppButtonColors.tertiary()
                 )
                 FTAppButton(
                     text = "History",
                     onClick = {},
-                    type = ButtonType.Tertiary,
+                    colors = FTAppButtonColors.tertiary()
                 )
             }
         }
@@ -106,12 +103,12 @@ fun QuickActions(
 
 @Composable
 fun BenchPressMetricCompleted() {
-    FTCard {
+    FTCard(colors = FTCardColors.disabled()) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            FTListHeader("Bench Press")
+            FTTitle("Bench Press")
 
             BenchPressStatusRow(
                 label = "Set 1: 80kg x 12 reps",
@@ -145,12 +142,14 @@ fun BenchPressMetricCompleted() {
                 FTAppButton(
                     text = "Add Set",
                     onClick = {},
-                    type = ButtonType.Secondary
+                    colors = FTAppButtonColors.secondary(),
+                    modifier = Modifier.weight(1f)
                 )
                 FTAppButton(
                     text = "Done",
                     onClick = {},
-                    type = ButtonType.Primary
+                    colors = FTAppButtonColors.primary(),
+                    modifier = Modifier.weight(1f)
                 )
             }
         }
