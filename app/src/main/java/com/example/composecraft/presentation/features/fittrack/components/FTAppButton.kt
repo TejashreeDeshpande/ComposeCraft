@@ -1,8 +1,10 @@
 package com.example.composecraft.presentation.features.fittrack.components
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -29,16 +31,18 @@ fun FTAppButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    leadingIcon: (@Composable () -> Unit)? = null,
     colors: ButtonColors = FTAppButtonColors.primary(),
 ) {
     ElevatedButton(
-        onClick = {
-            onClick()
-        },
+        onClick = onClick,
+        enabled = enabled,
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
         colors = colors
     ) {
+        leadingIcon?.invoke()
+        if (leadingIcon != null) Spacer(Modifier.width(8.dp))
         Text(
             modifier = Modifier.padding(vertical = 8.dp),
             text = text,

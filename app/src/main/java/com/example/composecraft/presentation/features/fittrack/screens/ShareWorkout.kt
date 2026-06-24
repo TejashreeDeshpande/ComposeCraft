@@ -14,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
-import com.example.composecraft.presentation.features.fittrack.components.FTListRow
+import com.example.composecraft.presentation.features.fittrack.components.FTCircleIcon
+import com.example.composecraft.presentation.features.fittrack.components.FTListItem
 import com.example.composecraft.presentation.features.fittrack.components.FTTextColor
 import com.example.composecraft.presentation.features.fittrack.components.FTTextStyle
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 
@@ -58,14 +58,48 @@ fun ShareWorkoutContent(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         WorkoutCard()
-        FTTitle(title = "Share Options")
+        FTTitle(text = "Share Options")
 
-        FTListRow(leadingIconStr = "📳", label = "NFC Transfer", desc = "Tap phones together")
-        FTListRow(leadingIconStr = "ᛒ", label = "Bluetooth", desc = "Send to nearby device")
-        FTListRow(
-            leadingIconStr = "\uD80C\uDD32",
-            label = "Copy Link",
-            desc = "Share via text or email"
+        FTListItem(
+            title = "NFC Transfer",
+            subTitle = "Tap phones together",
+            leading = {
+                FTCircleIcon(
+                    iconStr = "📳",
+                    iconSize = 44.dp,
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                    onClickActionButton = {}
+                )
+            }
+        )
+
+        FTListItem(
+            title = "Bluetooth",
+            subTitle = "Send to nearby device",
+            leading = {
+                FTCircleIcon(
+                    iconStr = "ᛒ",
+                    iconSize = 44.dp,
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                    onClickActionButton = {}
+                )
+            }
+        )
+
+        FTListItem(
+            title = "Copy Link",
+            subTitle = "Share via text or email",
+            leading = {
+                FTCircleIcon(
+                    iconStr = "\uD80C\uDD32",
+                    iconSize = 44.dp,
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                    onClickActionButton = {}
+                )
+            }
         )
 
         FTAppButton(text = "Start Sharing", onClick = {}, modifier = Modifier.fillMaxWidth())

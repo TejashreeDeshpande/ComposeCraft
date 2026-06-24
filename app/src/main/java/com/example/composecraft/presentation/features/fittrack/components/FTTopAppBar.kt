@@ -33,7 +33,7 @@ fun PreviewFTTopAppBar() {
         title = "FitTrack",
         subTitle = "Your fitness journey",
         gradient = Brush.horizontalGradient(FitTrackHeaderGradient),
-        onClickNavigationRail = TODO(),
+        onClickNavigationRail = {  },
     )
 }
 
@@ -45,10 +45,12 @@ fun FTTopAppBar(
     modifier: Modifier = Modifier,
     gradient: Brush = Brush.horizontalGradient(FitTrackHeaderGradient),
     onClickNavigationRail: () -> Unit = LocalNavigationRailToggle.current,
-    content: @Composable () -> Unit = {}
+    content: @Composable () -> Unit = {},
 ) {
     TopAppBar(
-        modifier = modifier.fillMaxWidth().background(gradient),
+        modifier = modifier
+            .fillMaxWidth()
+            .background(gradient),
         windowInsets = WindowInsets(0.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,

@@ -17,7 +17,6 @@ import com.example.composecraft.presentation.features.fittrack.components.FTMult
 import com.example.composecraft.presentation.features.fittrack.components.FTTextField
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 

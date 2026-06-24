@@ -15,14 +15,22 @@ private fun PreviewFTTextField() {
     FTTextField(
         title = "Workout Name",
         value = "",
-        onValueChanged = {})
+        onValueChanged = {},
+//        label = "Enter name")
+    )
 }
 
 @Composable
 fun FTTextField(
     title: String,
     value: String,
-    onValueChanged: () -> Unit
+    onValueChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    label: String = "",
+    error: String? = null,
+    singleLine: Boolean = true,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
     Text(
         text = title,
@@ -31,7 +39,16 @@ fun FTTextField(
     )
     OutlinedTextField(
         value = value,
-        onValueChange = { onValueChanged() },
-        modifier = Modifier.fillMaxWidth()
+        onValueChange = onValueChanged,
+        modifier = modifier.fillMaxWidth(),
+        label = { Text(label) },
+        isError = error != null,
+        singleLine = singleLine,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        supportingText = {
+            error?.let { FTErrorText(it) }
+        },
+        shape = MaterialTheme.shapes.medium
     )
 }

@@ -145,7 +145,7 @@ fun WorkoutListItemPreview() {
 }
 
 @Composable
-fun WorkoutListItem(
+private fun WorkoutListItem(
     title: String,
     subTitle: String,
     status: WorkoutStatus,

@@ -22,7 +22,6 @@ import com.example.composecraft.presentation.features.fittrack.components.FTCard
 import com.example.composecraft.presentation.features.fittrack.components.FTCardColors
 import com.example.composecraft.presentation.features.fittrack.components.FTTitle
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
 import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
 import com.example.composecraft.ui.theme.FontSize
@@ -53,7 +52,8 @@ fun Profile() {
 
 @Composable
 fun ProfileContent(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
         WorkoutStatusRow()
         SettingsCard()
@@ -65,9 +65,7 @@ fun ProfileContent(modifier: Modifier = Modifier) {
 fun SettingsCard() {
     FTCard(colors = FTCardColors.disabled()) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .padding(top = 16.dp, bottom = 16.dp),
+            modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             FTTitle("Settings")
@@ -103,22 +101,28 @@ private fun WorkoutStatusRow() {
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         FTCard(
-            modifier = Modifier.weight(1f).fillMaxHeight(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
             colors = FTCardColors.disabled()
         ) {
             DataColumn(value = 12, label = "Workout")
         }
         FTCard(
-            modifier = Modifier.weight(1f).fillMaxHeight(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
             colors = FTCardColors.disabled()
         ) {
             DataColumn(value = 5, label = "Week Streak")
         }
         FTCard(
-            modifier = Modifier.weight(1f).fillMaxHeight(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
             colors = FTCardColors.disabled()
         ) {
             DataColumn(value = 23, label = "Exercises")

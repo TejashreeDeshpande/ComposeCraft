@@ -1,5 +1,6 @@
 package com.example.composecraft.presentation.features.fittrack.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,20 +10,30 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButton
 import com.example.composecraft.presentation.features.fittrack.components.FTAppButtonColors
-import com.example.composecraft.presentation.features.fittrack.components.FTListRow
+import com.example.composecraft.presentation.features.fittrack.components.FTCircleIcon
+import com.example.composecraft.presentation.features.fittrack.components.FTListItem
 import com.example.composecraft.presentation.features.fittrack.components.FTTextField
 import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBar
-import com.example.composecraft.presentation.features.fittrack.components.FTTopAppBarColors
+import com.example.composecraft.presentation.features.fittrack.screens.viewmodel.CreateWorkoutEffect
+import com.example.composecraft.presentation.features.fittrack.screens.viewmodel.CreateWorkoutIntent
+import com.example.composecraft.presentation.features.fittrack.screens.viewmodel.CreateWorkoutViewModel
 import com.example.composecraft.ui.theme.FitTrackGradients
 import com.example.composecraft.ui.theme.FitTrackTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Preview
 @Composable
@@ -33,17 +44,42 @@ fun PreviewCreateWorkout() {
 }
 
 @Composable
-fun CreateWorkout() {
+fun CreateWorkout(viewModel: CreateWorkoutViewModel = koinViewModel()) {
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                CreateWorkoutEffect.NavigateBack -> {
+//                    navController.popBackStack()
+                }
+
+                is CreateWorkoutEffect.ShowMessage -> {
+                    snackbarHostState.showSnackbar(effect.message)
+                }
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             FTTopAppBar(
                 title = "Create Workout",
                 subTitle = "Design your routine",
-                gradient= FitTrackGradients.WorkoutBuilder,
+                gradient = FitTrackGradients.WorkoutBuilder,
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
         CreateWorkoutContent(
+            workoutName = state.workoutName,
+            onWorkoutNameChanged = {
+                viewModel.onIntent(CreateWorkoutIntent.WorkoutNameChanged(it))
+            },
+            onClickSaveWorkout = {
+                viewModel.onIntent(CreateWorkoutIntent.SaveWorkout)
+            },
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -51,7 +87,10 @@ fun CreateWorkout() {
 
 @Composable
 fun CreateWorkoutContent(
-    modifier: Modifier = Modifier
+    workoutName: String,
+    onWorkoutNameChanged: (String) -> Unit,
+    onClickSaveWorkout: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -61,13 +100,15 @@ fun CreateWorkoutContent(
     ) {
         FTTextField(
             title = "Workout Name",
-            value = "Push Day",
-            onValueChanged = {}
+            value = workoutName,
+            onValueChanged = onWorkoutNameChanged
         )
         ExerciseSuggestionList()
         ActionButtons(
             onClickAddExercise = {},
-            onClickSaveWorkout = {})
+            onClickSaveWorkout = {
+                onClickSaveWorkout()
+            })
     }
 
 }
@@ -91,6 +132,7 @@ private fun ActionButtons(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ExerciseSuggestionList() {
     LazyColumn(
@@ -105,10 +147,19 @@ private fun ExerciseSuggestionList() {
             )
         }
         items(mockExercises) { exercise ->
-            FTListRow(
-                label = exercise.name.title,
-                desc = exercise.desc,
-                trailingIconStr = "x"
+            
+            FTListItem(
+                title = exercise.name.title,
+                subTitle = exercise.desc,
+                trailing = {
+                    FTCircleIcon(
+                        iconStr = "T",
+                        iconSize = 44.dp,
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onSecondary,
+                        onClickActionButton = {}
+                    )
+                }
             )
         }
     }

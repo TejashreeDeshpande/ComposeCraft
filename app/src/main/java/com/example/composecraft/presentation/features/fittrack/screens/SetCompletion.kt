@@ -75,7 +75,7 @@ fun QuickActions(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            FTTitle(title = "Quick Actions")
+            FTTitle(text = "Quick Actions")
 
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),

@@ -1,21 +1,25 @@
 package com.example.composecraft
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.ExperimentalMaterial3Api
-import com.example.composecraft.presentation.features.fittrack.navigation.FitTrackAppNavigation
-import com.example.composecraft.ui.theme.FitTrackTheme
+import androidx.annotation.RequiresApi
+import com.example.composecraft.presentation.features.flightstatus.data.viewmodel.FlightStatusViewModel
+import com.example.composecraft.presentation.features.flightstatus.presentation.screens.FlightStatusRoute
+import com.example.composecraft.ui.theme.FlightStatusTheme
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            FitTrackTheme {
-                FitTrackAppNavigation()
+            FlightStatusTheme {
+                val viewModel: FlightStatusViewModel = koinViewModel()
+                FlightStatusRoute(viewModel)
             }
         }
     }
