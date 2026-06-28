@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 // --- Data / State ---
 
@@ -42,16 +43,16 @@ class BookingConfirmationViewModel : ViewModel() {
         viewModelScope.launch {
             for (seconds in CANCEL_WINDOW_SECONDS downTo 1) {
                 _state.value = BookingConfirmationState.Cancellable(seconds)
-                delay(1000L)
+                delay(1000L.milliseconds)
             }
-            // Only confirm if user hasn't cancelled
+            // Only confirm if user hasn't canceled
             if (_state.value !is BookingConfirmationState.Cancelled) {
                 _state.value = BookingConfirmationState.Confirmed
             }
         }
     }
 
-    fun onCancelBooking() {
+    private fun onCancelBooking() {
         if (_state.value is BookingConfirmationState.Cancellable) {
             _state.value = BookingConfirmationState.Cancelled
         }
