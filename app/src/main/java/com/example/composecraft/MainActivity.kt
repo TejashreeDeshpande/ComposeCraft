@@ -6,10 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import com.example.composecraft.presentation.features.flightstatus.data.viewmodel.FlightStatusViewModel
-import com.example.composecraft.presentation.features.flightstatus.presentation.screens.FlightStatusRoute
-import com.example.composecraft.ui.theme.FlightStatusTheme
-import org.koin.androidx.compose.koinViewModel
+import com.example.composecraft.ui.navigation.AppNavGraph
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -17,10 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            FlightStatusTheme {
-                val viewModel: FlightStatusViewModel = koinViewModel()
-                FlightStatusRoute(viewModel)
-            }
+            AppNavGraph()
         }
     }
 }
